@@ -1,0 +1,16 @@
+{
+  "author": "Tom Wilson <tom@jackhq.com>",
+  "name": "apprentice",
+  "description": "[Experimental] web library that adds some sugar to routing",
+  "version": "0.1.0",
+  "repository": {
+    "url": ""
+  },
+  "engines": {
+    "node": "0.6 || 0.7"
+  },
+  "dependencies": {
+    "routes": "git://github.com/aaronblohowiak/routes.js.git"
+  },
+  "devDependencies": {}
+}
