@@ -2,9 +2,17 @@
 
 Hey Web Frameworks!  
 
+![http://yourfired.jpg.to](http://yourfired.jpg.to)
+
 ## YOUR FIRED!
 
 The Apprentice makes it simple to get started creating an html and/or json web application in no time, with as little sugar as possible.
+
+# Install
+
+``` sh
+npm install apprentice
+```
 
 # Usage 
 
