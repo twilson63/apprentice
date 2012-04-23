@@ -2,7 +2,7 @@
 
 Hey Web Frameworks!  
 
-![http://yourfired.jpg.to](http://yourfired.jpg.to)
+![http://blog.riskmanagers.us/wp-content/uploads/2010/11/donaldtrumpyourefired.jpg](http://blog.riskmanagers.us/wp-content/uploads/2010/11/donaldtrumpyourefired.jpg)
 
 ## YOUR FIRED!
 
