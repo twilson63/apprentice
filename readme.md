@@ -1,7 +1,30 @@
-# Appentice - Web Library
+# Apprentice
 
-This is a small 12 line project that takes routes.js and add some semantic sugar to reduce the redundancy for a web application.  This project is a very minimalistic approach to rest driven api web services.  
+Hey Web Frameworks!  
+
+## YOUR FIRED!
+
+The Apprentice makes it simple to get started creating an html and/or json web application in no time, with as little sugar as possible.
 
 # Usage 
 
-Coming Soon
+``` javascript
+var http = require('http'),
+  server = http.createServer(),
+  router = new require('apprentice')(server);
+
+router.addRoute('/', function(req, res) {
+  res.writeHead(200, {'content-type': 'text/plain'});
+  res.end('Hello World');
+});
+
+router.addRoute('/widgets', function(req, res) {
+  if(req.method == 'POST') {
+    console.dir(req.json);
+  }
+  res.writeHead(200, {'content-type': 'text/plain'});
+  res.end('Thank You!');
+});
+
+server.listen(3000);
+```

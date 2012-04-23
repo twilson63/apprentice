@@ -12,5 +12,7 @@
   "dependencies": {
     "routes": "git://github.com/aaronblohowiak/routes.js.git"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "request": "~2.9.202"
+  }
 }
