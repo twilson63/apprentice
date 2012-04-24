@@ -20,9 +20,19 @@ npm install apprentice
 var app = require('apprentice'),
   pin = require('linchpin');
 
-pin.on('GET/', function(req, res) {
+pin.on('GET', function(req, res) {
   res.writeHead(200, {'content-type': 'text/plain'});
-  res.end('Hello World');
+  res.end('Come in to the Board Room');
+});
+
+pin.on('GET/lose', function(req, res) {
+  res.writeHead(200, {'content-type': 'text/plain'});
+  res.end('You\'re fired!');
+});
+
+pin.on('GET/win', function(req, res) {
+  res.writeHead(200, {'content-type': 'text/plain'});
+  res.end('You\'re hired!');
 });
 
 app.httpServer.listen(3000);

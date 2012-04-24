@@ -27,7 +27,9 @@ function Apprentice() {
   self.httpServer = http.createServer();
 
   self.httpServer.on('request', function(req, res) {
-    route = req.method + url.parse(req.url).pathname;
+    var path = url.parse(req.url).pathname, route = req.method;
+    if (path.length > 1) route += url.parse(req.url).pathname;
+    console.log(route);
     req.body = "";
     req.on('data', function(data) { req.body += data; });
     req.on('end', function() { 
