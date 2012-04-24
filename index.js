@@ -1,14 +1,7 @@
-var router = new require('routes').Router();
-
-var routeRequest = function(req, res) {
-  var route = router.match(req.url);
-  if (route != null) {
-    route.fn.call(this, req, res, route.params, route.splats);
-  } else {
-    res.writeHead(404, { 'content-type': 'text/plain'});
-    res.end('Not Found');
-  }
-};
+var pin = require('linchpin'), 
+  url = require('url'),
+  http = require('http'),
+  https = require('https');
 
 var parseJSON = function(req) {
   if (req.headers['content-type'] === 'application/json') {
@@ -16,16 +9,24 @@ var parseJSON = function(req) {
   }
 }
 
-module.exports = function(server) {
-  server.on('request', function(req, res) {
+function Apprentice() {
+  var self = this;
+
+  self.httpServer = http.createServer();
+
+  self.httpServer.on('request', function(req, res) {
+    route = req.method + url.parse(req.url).pathname;
     req.body = "";
     // Get body if post or put
     if (req.method.match(/(PUT|POST)/) !== null) {
       req.on('data', function(data) { req.body += data; });
-      req.on('end', function() { parseJSON(req); routeRequest(req, res); });
+      req.on('end', function() { parseJSON(req); pin.emit(route, req, res); });
     } else {
-      routeRequest(req, res);
+      pin.emit(route, req, res);
     }
   });
-  return router;
+
+  return self;
 };
+
+module.exports = Apprentice();
