@@ -19,4 +19,8 @@ pin.on 'POST/widgets', (req, res) ->
   res.writeHead 200, 'content-type': 'text/plain'
   res.end 'BAM! POST'
 
+pin.on 'GET/assets/*/*', (req, res) ->
+  res.writeHead 200, 'content-type': 'text/plain'
+  res.end 'FOO'
+
 app.httpServer.listen 3000

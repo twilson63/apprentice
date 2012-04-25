@@ -28,6 +28,8 @@ function Apprentice() {
 
   self.httpServer.on('request', function(req, res) {
     var path = url.parse(req.url).pathname, route = req.method;
+    // parse /[resource]/[id]
+    [nospace, req.resource, req.resourceId] = path.split('/')
     if (path.length > 1) route += url.parse(req.url).pathname;
     console.log(route);
     req.body = "";
