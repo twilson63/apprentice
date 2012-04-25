@@ -6,11 +6,15 @@ pin.on 'GET', (req, res) ->
   res.end 'YOU\'RE FIRED!'
 
 pin.on 'GET/widgets', (req, res) ->
+  console.log req.resource
+  console.log req.resourceId
+
   res.writeHead 200, 'content-type': 'text/plain'
   res.end 'BAM!'
 
 pin.on 'GET/widgets/*', (req, res) ->
-  console.log req.url.split('/').pop()
+  console.log req.resource
+  console.log req.resourceId
   res.writeHead 200, 'content-type': 'text/plain'
   res.end 'BAM! GET'
 
