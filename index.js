@@ -16,7 +16,7 @@ var parseBody = function(req) {
     try {
       req.params = JSON.parse(req.body);
     } catch (err) {
-      pin.emit 'LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()}
+      pin.emit('LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()});
     }
   } else if (contentType === 'application/xml') {
     // TODO: convert xml to params
@@ -24,7 +24,7 @@ var parseBody = function(req) {
     try {
       req.params = qs.parse(req.params)
     } catch (err) {
-      pin.emit 'LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()}
+      pin.emit('LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()});
     }
   }
 }
