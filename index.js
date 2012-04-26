@@ -7,17 +7,25 @@ var pin = require('linchpin'),
 var parseBody = function(req) {
   // exit if already parsed.
   if (req._params) return;
+  req.params = null;
 
   contentType = req.headers['content-type'];
   // flag as parsed
   req._params = true;
-
   if (contentType === 'application/json') {
-    req.params = JSON.parse(req.body);
+    try {
+      req.params = JSON.parse(req.body);
+    } catch (err) {
+      pin.emit 'LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()}
+    }
   } else if (contentType === 'application/xml') {
     // TODO: convert xml to params
   } else if (contentType === 'application/x-www-form-urlencoded') {
-    req.params = qs.parse(req.params)
+    try {
+      req.params = qs.parse(req.params)
+    } catch (err) {
+      pin.emit 'LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()}
+    }
   }
 }
 
