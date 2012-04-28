@@ -1,41 +1,11 @@
 var pin = require('linchpin'), 
   url = require('url'),
   http = require('http'),
-  https = require('https'),
-  qs = require('qs');
-
-var parseBody = function(req) {
-  // exit if already parsed.
-  if (req._params) return;
-  req.params = null;
-
-  contentType = req.headers['content-type'];
-  // flag as parsed
-  req._params = true;
-  if (contentType === 'application/json') {
-    try {
-      req.params = JSON.parse(req.body);
-    } catch (err) {
-      pin.emit('LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()});
-    }
-  } else if (contentType === 'application/xml') {
-    // TODO: convert xml to params
-  } else if (contentType === 'application/x-www-form-urlencoded') {
-    try {
-      req.params = qs.parse(req.params)
-    } catch (err) {
-      pin.emit('LOG-ERROR', { type: 'ERROR', msg: err.message, date: (new Date()).toString()});
-    }
-  }
-}
-
-var setResource = function(path, req) {
-  var pathItems = path.split('/');
-  req.resource = ""; req.resourceId = "";
-  if (pathItems.length > 1) { req.resource = pathItems[1]; }
-  if (pathItems.length > 2) { req.resourceId = pathItems[2]; }
-
-}
+//  https = require('https'),
+  parseBody = require('./lib/parse'),
+  setResource = require('./lib/resource'),
+  mime = require('./lib/mime'),
+  log = require('./lib/log');
 
 function Apprentice() {
   var self = this;
@@ -44,6 +14,32 @@ function Apprentice() {
 
   self.httpServer.on('request', function(req, res) {
     var path = url.parse(req.url).pathname, route = req.method;
+    
+    res.text = function(body, statusCode) {
+      if (statusCode == null || statusCode == 'undefined') { statusCode = 200 };
+      res.writeHead(statusCode, { 'content-type': mime.text });
+      res.end(body);
+    }
+    
+    res.json = function(body, statusCode) {
+      if (statusCode == null || statusCode == 'undefined') { statusCode = 200 };
+      try { 
+        body = JSON.stringify(body);
+        res.writeHead(statusCode, {'content-type': mime.json });
+        res.end(body);
+      } catch (err) { 
+        log('ERROR', err.message); 
+        res.writeHead(statusCode, {'content-type': mime.json });
+        res.end(JSON.stringify({ error: 'BAD JSON: ' + err.message}));
+      };
+    }
+    
+    res.html = function(body, statusCode) {
+      if (statusCode == null || statusCode == 'undefined') { statusCode = 200 };
+      res.writeHead(statusCode, {'content-type': mime.html });
+      res.end(body);
+    }
+    
     setResource(path, req);
     if (path.length > 1) route += url.parse(req.url).pathname;
     req.body = "";
