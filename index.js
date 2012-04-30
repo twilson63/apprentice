@@ -7,9 +7,8 @@ var pin = require('linchpin'),
   mime = require('./lib/mime'),
   log = require('./lib/log');
 
-// find file if route not handled
-pin.on('**', function(req, res) {
-  setTimeout ( -> if(!req.handled && req.method === 'GET') { filed('./public' + req.url).pipe(res); }), 30000
+pin.on('GET/assets/**', function(req, res) {
+  if(!req.handled && req.method === 'GET') { filed('./public' + req.url).pipe(res); } 
 });
 
 function Apprentice() {
