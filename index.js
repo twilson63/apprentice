@@ -1,7 +1,6 @@
 var pin = require('linchpin'), 
   url = require('url'),
   http = require('http'),
-//  https = require('https'),
   parseBody = require('./lib/parse'),
   setResource = require('./lib/resource'),
   mime = require('./lib/mime'),
@@ -49,6 +48,10 @@ function Apprentice() {
       pin.emit(route, req, res); 
     });
   });
+  
+  self.start = function(port, cb) {
+    self.httpServer.listen(port, cb);
+  }
 
   return self;
 };

@@ -63,3 +63,15 @@ res.html is a shortcut to send a html document to the caller.
 ``` javascript
 pin.on('GET', function(req, res) {res.html "<h1>Hello World</h1>");});
 ```
+
+## FAQ
+
+### How do I manage static assets
+
+You can use filed:
+
+``` javascript
+pin.on('GET/favicon.ico', function(req, res) { filed("#{__dirname}/../assets/favicon.ico").pipe(res); });
+pin.on 'GET/assets/*/*', function(req, res) { filed("#{__dirname}/../#{req.url}").pipe(res); });
+```
+
