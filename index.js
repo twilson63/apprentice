@@ -8,7 +8,7 @@ var pin = require('linchpin'),
   log = require('./lib/log');
 
 // find file if route not handled
-pin.on('*', function(req, res) {
+pin.on('GET*', function(req, res) {
   if(!req.handled) { filed('./public' + req.url).pipe(res); }
 });
 
