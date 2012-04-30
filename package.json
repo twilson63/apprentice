@@ -2,7 +2,7 @@
   "author": "Tom Wilson <tom@jackhq.com>",
   "name": "apprentice",
   "description": "[Experimental] web library that adds some sugar to routing",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "repository": {
     "url": ""
   },
