@@ -8,7 +8,7 @@ var pin = require('linchpin'),
   log = require('./lib/log');
 
 pin.on('GET/assets/**', function(req, res) {
-  if(!req.handled && req.method === 'GET') { filed('./public' + req.url).pipe(res); } 
+  filed('./' + req.url.replace(/assets/,'public')).pipe(res); } 
 });
 
 function Apprentice() {
