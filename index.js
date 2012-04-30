@@ -1,10 +1,16 @@
 var pin = require('linchpin'), 
   url = require('url'),
   http = require('http'),
+  filed = require('filed'),
   parseBody = require('./lib/parse'),
   setResource = require('./lib/resource'),
   mime = require('./lib/mime'),
   log = require('./lib/log');
+
+// find file if route not handled
+pin.on('*', function(req, res) {
+  if(!req.handled) { filed('./public' + req.url).pipe(res); }
+});
 
 function Apprentice() {
   var self = this;
@@ -15,12 +21,14 @@ function Apprentice() {
     var path = url.parse(req.url).pathname, route = req.method;
     
     res.text = function(body, statusCode) {
+      req.handled = true;
       if (statusCode == null || statusCode == 'undefined') { statusCode = 200 };
       res.writeHead(statusCode, { 'content-type': mime.text });
       res.end(body);
     }
     
     res.json = function(body, statusCode) {
+      req.handled = true;
       if (statusCode == null || statusCode == 'undefined') { statusCode = 200 };
       try { 
         body = JSON.stringify(body);
@@ -34,6 +42,7 @@ function Apprentice() {
     }
     
     res.html = function(body, statusCode) {
+      req.handled = true;
       if (statusCode == null || statusCode == 'undefined') { statusCode = 200 };
       res.writeHead(statusCode, {'content-type': mime.html });
       res.end(body);
