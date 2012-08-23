@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/twilson63/apprentice.png)](http://travis-ci.org/twilson63/apprentice)
 # Apprentice
 
 Hey Web Frameworks!  
